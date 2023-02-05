@@ -1,1 +1,113 @@
-<p>details works!</p>
+<main class="movie-detail">
+  <app-header></app-header>
+
+  <mat-spinner
+    class="movie-detail__loader"
+    *ngIf="isLoading$ | async"
+    aria-label="Loading..."
+  ></mat-spinner>
+
+  <ng-template
+    [ngIf]="(isLoading$ | async) === false && (isError$ | async) === false"
+  >
+    <div class="movie-detail__wrapper">
+      <article
+        *ngIf="(isLoading$ | async) === false"
+        class="movie-detail__container"
+      >
+        <figure class="movie-detail__banner">
+          <img
+            class="movie-detail__poster"
+            src="{{ (details$ | async)?.Poster }}"
+            alt="{{ (details$ | async)?.Title }}"
+          />
+        </figure>
+        <div class="movie-detail__content">
+          <h1 class="movie-detail__title">{{ (details$ | async)?.Title }}</h1>
+
+          <div class="movie-detail__meta-wrapper">
+            <div class="movie-detail__badge-wrapper">
+              <div class="movie-detail__badge badge-fill">
+                {{ (details$ | async)?.Type }}
+              </div>
+            </div>
+
+            <div class="movie-detail__genre-wrapper">
+              <a>{{ (details$ | async)?.Genre }}</a>
+            </div>
+
+            <div class="movie-detail__date-time">
+              <div class="movie-detail__icon-group">
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="calendar icon"
+                  class="movie-detail__icon movie-detail__icon--calendar"
+                  fontIcon="event"
+                ></mat-icon>
+                <span class="movie-detail__date">
+                  {{ (details$ | async)?.Released }}
+                </span>
+              </div>
+
+              <div class="movie-detail__icon-group">
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="schedule icon"
+                  class="movie-detail__icon movie-detail__icon--schedule"
+                  fontIcon="schedule"
+                ></mat-icon>
+                <span class="movie-detail__runtime">
+                  {{ (details$ | async)?.Runtime }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="movie-detail__storyline">{{ (details$ | async)?.Plot }}</p>
+
+          <div class="movie-detail__section">
+            <p class="movie-detail__section-title">Actors:</p>
+            <p class="movie-detail__section-description">
+              {{ (details$ | async)?.Actors }}
+            </p>
+          </div>
+          <div class="movie-detail__section">
+            <p class="movie-detail__section-title">Writer:</p>
+            <p class="movie-detail__section-description">
+              {{ (details$ | async)?.Writer }}
+            </p>
+          </div>
+          <div class="movie-detail__section">
+            <p class="movie-detail__section-title">Director:</p>
+            <p class="movie-detail__section-description">
+              {{ (details$ | async)?.Director }}
+            </p>
+          </div>
+
+          <div class="movie-detail__section movie-detail__section--rating">
+            <p class="movie-detail__section-title">Ratings:</p>
+            <p class="movie-detail__section-description">
+              <li
+                class="movie-detail__rating"
+                *ngFor="let rating of (details$ | async)?.Ratings"
+              >
+                {{ rating.Source }}:
+                <strong>{{ rating.Value }}</strong>
+              </li>
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </ng-template>
+
+  <ng-template [ngIf]="(isLoading$ | async) === false && (isError$ | async)">
+    <div class="movie-detail__error">
+      <h2>No results found, try with another ID!</h2>
+      <img
+        src="assets/error.svg"
+        alt="Error Image: No results found, try with another ID!"
+      />
+    </div>
+  </ng-template>
+</main>
