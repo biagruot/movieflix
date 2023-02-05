@@ -2,7 +2,7 @@
 <div class="search">
   <!-- Adding a header to the search overlay -->
   <div class="search__overlay">
-    <h1 class="search__header">MovieFlix 🍿</h1>
+    <h1 class="search__header" data-testId="searchPageTitle">MovieFlix 🍿</h1>
 
     <!-- Wrapping the form in a form tag and using Angular's formGroup directive -->
     <form [formGroup]="form" class="search__form">
@@ -10,7 +10,12 @@
       <mat-form-field class="search__input">
         <mat-label>Search</mat-label>
         <!-- Using Angular Material's matInput directive for input styling -->
-        <input matInput placeholder="Ex. Titanic" formControlName="search" />
+        <input
+          matInput
+          placeholder="Ex. Titanic"
+          formControlName="search"
+          data-testId="searchInput"
+        />
         <!-- Using Angular Material's mat-icon-button for clear button styling -->
         <button mat-icon-button matSuffix (click)="clearSearch()">
           <!-- Using Angular Material's mat-icon for font icon styling -->
@@ -21,7 +26,7 @@
       <!-- Using Angular Material's mat-form-field and mat-select for select styling -->
       <mat-form-field class="search__select" appearance="fill">
         <mat-label>Type</mat-label>
-        <mat-select formControlName="type">
+        <mat-select data-testId="searchFilter" formControlName="type">
           <!-- Using ngFor directive to display the filterTypes options -->
           <mat-option *ngFor="let type of filterTypes" [value]="type.value">
             {{ type.viewValue }}
@@ -38,12 +43,16 @@
 
     <!-- Using Angular's async pipe to get the movies and using ngIf to show the list component only if not loading -->
     <app-list
-      *ngIf="(isLoading$ | async) === false"
+      data-testId="searchResults"
+      *ngIf="
+        (isLoading$ | async) === false && (movies$ | async | keyvalue)?.length
+      "
       [movies]="movies$ | async"
     ></app-list>
 
     <!-- Using Angular's async pipe and ngIf directive to show the paginator component only if not loading and there are results -->
     <mat-paginator
+      data-testId="searchPaginator"
       class="search__paginator"
       *ngIf="
         (isLoading$ | async) === false &&
@@ -59,6 +68,7 @@
 
     <!-- Using Angular's async pipe and ngIf directive to show error message and image -->
     <div
+      data-testId="searchError"
       class="search__error"
       *ngIf="(isLoading$ | async) === false && (isError$ | async)"
     >

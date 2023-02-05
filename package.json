@@ -9,7 +9,8 @@
     "test": "ng test",
     "format": "prettier \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --write",
     "lint": "ng lint",
-    "lint:fix": "prettier --write src && ng lint --fix"
+    "lint:fix": "prettier --write src && ng lint --fix",
+    "e2e": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,7 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
+    "cypress": "^12.5.1",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",

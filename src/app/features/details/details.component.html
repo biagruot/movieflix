@@ -10,7 +10,7 @@
   <ng-template
     [ngIf]="(isLoading$ | async) === false && (isError$ | async) === false"
   >
-    <div class="movie-detail__wrapper">
+    <div class="movie-detail__wrapper" data-testId="movieDetails">
       <article
         *ngIf="(isLoading$ | async) === false"
         class="movie-detail__container"
@@ -102,7 +102,7 @@
   </ng-template>
 
   <ng-template [ngIf]="(isLoading$ | async) === false && (isError$ | async)">
-    <div class="movie-detail__error">
+    <div class="movie-detail__error" data-testId="detailsError">
       <h2>No results found, try with another ID!</h2>
       <img
         src="assets/error.svg"

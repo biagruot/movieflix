@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" data-testId="movieCard">
   <!-- Add alt text to describe the poster image -->
   <img
     class="card__image"
@@ -14,6 +14,7 @@
       [routerLink]="['/details', movie.imdbID]"
       type="button"
       class="btn card__btn"
+      data-testId="goToDetailsBtn"
     >
       Details
     </button>
@@ -24,6 +25,7 @@
       href="https://www.imdb.com/title/{{ movie.imdbID }}"
       target="_blank"
       rel="noopener"
+      data-testId="goToIMDBBtn"
     >
       Go to IMDB
     </a>
