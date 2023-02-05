@@ -8,7 +8,7 @@ const routes: Routes = [
       import('./features/search/search.module').then((m) => m.SearchModule),
   },
   {
-    path: 'details',
+    path: 'details/:id',
     loadChildren: () =>
       import('./features/details/details.module').then((m) => m.DetailsModule),
   },
