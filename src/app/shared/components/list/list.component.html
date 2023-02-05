@@ -1,0 +1,21 @@
+<!-- The `list` class container is used to display a list of movies grouped by year -->
+<div class="list">
+  <!-- `ngFor` directive is used to loop through the `movies` object and display each movie group -->
+  <ng-container *ngFor="let movieGroup of movies | keyvalue">
+    <!-- A container for each movie group -->
+    <div>
+      <!-- Display the year for the movie group -->
+      <h2 class="list__year" aria-label="Movie group year">
+        {{ movieGroup.key }}
+      </h2>
+
+      <!-- Container for movies in this group -->
+      <div class="list__movies">
+        <!-- Loop through each movie in the group and display a card component for each movie -->
+        <ng-container *ngFor="let movie of movieGroup.value">
+          <app-card [movie]="movie"></app-card>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,31 @@
+<div class="card">
+  <!-- Add alt text to describe the poster image -->
+  <img
+    class="card__image"
+    [src]="movie.Poster"
+    alt="Poster for the movie {{ movie.Title }}"
+  />
+
+  <div class="card__details">
+    <span class="card__title">{{ movie.Title }}</span>
+
+    <!-- Use [routerLink] directive instead of (click) to navigate to another route -->
+    <button
+      [routerLink]="['/details', movie.imdbID]"
+      type="button"
+      class="btn card__btn"
+    >
+      Details
+    </button>
+
+    <!-- Use rel="noopener" to avoid security vulnerability -->
+    <a
+      class="card__link"
+      href="https://www.imdb.com/title/{{ movie.imdbID }}"
+      target="_blank"
+      rel="noopener"
+    >
+      Go to IMDB
+    </a>
+  </div>
+</div>

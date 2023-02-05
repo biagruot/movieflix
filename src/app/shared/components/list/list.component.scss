@@ -1,0 +1,18 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  justify-content: center;
+
+  &__year {
+    color: #56566f;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__movies {
+    flex-direction: row;
+    display: flex;
+    gap: 4rem;
+  }
+}

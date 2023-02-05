@@ -31,3 +31,9 @@ export type Movie = {
   Website: string;
   Response: string;
 };
+
+export interface GroupedMovies {
+  [year: string]: Array<Movie>;
+}
+
+export type Types = 'movie' | 'series' | 'episode';
