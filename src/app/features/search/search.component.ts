@@ -94,11 +94,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       );
 
     this.store
-      .pipe(
-        select(selectFilterType),
-        filter((filterType: Types | undefined) => filterType !== undefined),
-        take(1)
-      )
+      .pipe(select(selectFilterType), take(1))
       .subscribe((filterType) =>
         this.form.setControl('type', new FormControl(filterType))
       );
