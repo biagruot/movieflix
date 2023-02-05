@@ -1,7 +1,72 @@
-<form [formGroup]="searchForm">
-  <input
-    type="text"
-    placeholder="Search for a movie..."
-    formControlName="search"
-  />
-</form>
+<!-- Wrapping form and search results in a container for better organization -->
+<div class="search">
+  <!-- Adding a header to the search overlay -->
+  <div class="search__overlay">
+    <h1 class="search__header">MovieFlix 🍿</h1>
+
+    <!-- Wrapping the form in a form tag and using Angular's formGroup directive -->
+    <form [formGroup]="form" class="search__form">
+      <!-- Using Angular Material's mat-form-field component to style the input field -->
+      <mat-form-field class="search__input">
+        <mat-label>Search</mat-label>
+        <!-- Using Angular Material's matInput directive for input styling -->
+        <input matInput placeholder="Ex. Titanic" formControlName="search" />
+        <!-- Using Angular Material's mat-icon-button for clear button styling -->
+        <button mat-icon-button matSuffix (click)="clearSearch()">
+          <!-- Using Angular Material's mat-icon for font icon styling -->
+          <mat-icon fontIcon="close" />
+        </button>
+      </mat-form-field>
+
+      <!-- Using Angular Material's mat-form-field and mat-select for select styling -->
+      <mat-form-field class="search__select" appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <!-- Using ngFor directive to display the filterTypes options -->
+          <mat-option *ngFor="let type of filterTypes" [value]="type.value">
+            {{ type.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <!-- Wrapping search results in a container for better organization -->
+  <div class="search__results">
+    <!-- Using Angular's async pipe and ngIf directive to show a loading spinner -->
+    <mat-spinner *ngIf="isLoading$ | async" aria-label="Loading..." />
+
+    <!-- Using Angular's async pipe to get the movies and using ngIf to show the list component only if not loading -->
+    <app-list
+      *ngIf="(isLoading$ | async) === false"
+      [movies]="movies$ | async"
+    ></app-list>
+
+    <!-- Using Angular's async pipe and ngIf directive to show the paginator component only if not loading and there are results -->
+    <mat-paginator
+      class="search__paginator"
+      *ngIf="
+        (isLoading$ | async) === false &&
+        (isError$ | async) === false &&
+        (movies$ | async | keyvalue)?.length
+      "
+      [hidePageSize]="true"
+      [pageSize]="10"
+      [pageIndex]="pageIndex"
+      [length]="totalResults$ | async"
+      (page)="changePage($event)"
+    ></mat-paginator>
+
+    <!-- Using Angular's async pipe and ngIf directive to show error message and image -->
+    <div
+      class="search__error"
+      *ngIf="(isLoading$ | async) === false && (isError$ | async)"
+    >
+      <h2>No results found, try with different search criteria!</h2>
+      <img
+        src="assets/error.svg"
+        alt="No results found, try with different search criteria!"
+      />
+    </div>
+  </div>
+</div>

@@ -11,12 +11,14 @@ export class SearchEffects {
   doSearch = createEffect(() =>
     this.actions$.pipe(
       ofType(search),
-      switchMap(({ query }) => {
+      switchMap(({ query, filterType, page }) => {
         return this.httpClient
           .get<SearchMoviesResponse>(environment.api_url, {
             params: {
               apikey: environment.api_key,
               s: query,
+              page: page,
+              ...(filterType ? { type: filterType } : {}),
             },
           })
           .pipe(
